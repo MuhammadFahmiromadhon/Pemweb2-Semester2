@@ -18,5 +18,80 @@ class StudentController extends Controller
         ]);
     }
         
+    // Method untuk menampilkan form tambah student
+    public function create() {
+        return view('admin.contents.student.create');
+    }
+
+    // Method untuk menyimpan data student
+    public function store(Request $request)
+    {
+        // Validasi data yang diterima
+        $request->validate([
+            'name' => 'required',
+            'nim' => 'required|numeric',
+            'major' => 'required',
+            'class' => 'required'
+        ]);
+
+        // simpan ke database
+        Student::create([
+            'name' => $request->name,
+            'nim' => $request->nim,
+            'major' => $request->major,
+            'class' => $request->class,
+        ]);
+
+        // Arahkan ke halaman student index
+        return redirect('/admin/student')->with('pesan', 'Berhasil menambahkan data.');
+    }
+
+    // Method untuk menampilkan halaman edit
+    public function edit($id){
+        //cari student berdasarkan id
+        $student = Student::find($id); // SELECT * FROM students WHERE id = $id;
+
+        // kirim student ke view edit
+        return view('admin.contents.student.edit', [
+            'student' => $student
+        ]);
+    }
+
+    // Method untuk menyimpan hasil update
+    public function update ($id, Request $request){
+        // cari data student berdasarkan id
+        $student = Student::find($id); // SELECT * FROM students WHERE id = $id;
+
+        // Validasi data yang diterima
+        $request->validate([
+            'name' => 'required',
+            'nim' => 'required|numeric',
+            'major' => 'required',
+            'class' => 'required',
+        ]);
+
+        // simpan perubahan
+        $student->update([
+            'name' => $request->name,
+            'nim' => $request->nim,
+            'major' => $request->major,
+            'class' => $request->class,
+        ]);
+
+        // kembalikan ke halaman student
+        return redirect('/admin/student')->with('pesan', 'Berhasil mengedit student.');
+    }
+
+    // Method untuk menghapus student
+    public function destroy($id){
+        // cari data student berdasarkan id
+        $student = Student::find($id); // SELECT * FROM students WHERE id = $id;
+
+        // hapus student
+        $student->delete();
+
+        // kembalikan ke halaman student
+        return redirect('/admin/student')->with('pesan', 'Berhasil mengedit student.');
+    }
 }
 
