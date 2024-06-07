@@ -23,6 +23,7 @@
                             <th>Nim</th>
                             <th>Major</th>
                             <th>Class</th>
+                            <th>Course</th>
                             <th>Action</th>
                         </tr>
 
@@ -33,12 +34,13 @@
                                 <td>{{ $student->nim }}</td>
                                 <td>{{ $student->major }}</td>
                                 <td>{{ $student->class }}</td>
+                                <td>{!! $student->course->name ?? '<span class="badge bg-danger">Belum Mengikuti Course</span>' !!}</td>
                                 <td class="d-flex">
-                                    <a href="/admin/student/edit/{{ $student->id }}" class="btn btn-warning me-2">Edit</a>
+                                    <a href="/admin/student/edit/{{ $student->id }}" class="btn btn-warning me-2"><i class="bi bi-pen me-2"></i>Edit</a>
                                     <form action="/admin/student/delete/{{ $student->id }}" method="POST">
                                         @method('DELETE')
                                         @csrf
-                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah Anda yakin?')">Hapus</button>
+                                        <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah Anda yakin?')"><i class="bi bi-trash me-2"></i>Delete</button>
                                     </form>
                                 </td>
                             </tr>

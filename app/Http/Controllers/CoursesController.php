@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CoursesController extends Controller
 {
-    // method untuk menampikan halaman student
+    // method untuk menampikan halaman courses
     public function index(){
         // mendapatkan data courses dari database
         $courses = courses::all();
@@ -46,10 +46,10 @@ class CoursesController extends Controller
 
     // Method untuk menampilkan halaman edit
     public function edit($id){
-        //cari student berdasarkan id
+        //cari courses berdasarkan id
         $courses = Courses::find($id); // SELECT * FROM students WHERE id = $id;
 
-        // kirim student ke view edit
+        // kirim courses ke view edit
         return view('admin.contents.courses.edit', [
             'courses' => $courses
         ]);
@@ -57,7 +57,7 @@ class CoursesController extends Controller
 
     // Method untuk menyimpan hasil update
     public function update ($id, Request $request){
-        // cari data student berdasarkan id
+        // cari data courses berdasarkan id
         $courses = Courses::find($id); // SELECT * FROM students WHERE id = $id;
 
         // Validasi data yang diterima
@@ -74,19 +74,19 @@ class CoursesController extends Controller
             'desc' => $request->desc,
         ]);
 
-        // kembalikan ke halaman student
+        // kembalikan ke halaman courses
         return redirect('/admin/courses')->with('pesan', 'Berhasil mengedit courses.');
     }
 
-    // Method untuk menghapus student
+    // Method untuk menghapus courses
     public function destroy($id){
-        // cari data student berdasarkan id
+        // cari data courses berdasarkan id
         $courses = Courses::find($id); // SELECT * FROM students WHERE id = $id;
 
-        // hapus student
+        // hapus courses
         $courses->delete();
 
-        // kembalikan ke halaman student
+        // kembalikan ke halaman courses
         return redirect('/admin/courses')->with('pesan', 'Berhasil mengedit courses.');
     }
 }
