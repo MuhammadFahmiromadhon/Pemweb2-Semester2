@@ -1,11 +1,13 @@
-<?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\CoursesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 
+
+ Route::get('/', function () {
+     return view('welcome');
+ });
 
 // // Route untuk menampilkan salam
 // Route::get('/salam', function(){
@@ -21,13 +23,13 @@ use App\Http\Controllers\StudentController;
  */
 
 // Dashboard Route
-Route::get('admin/dashboard', [DashboardController::class, 'index']) ->name('dashboard')->middleware('auth');
+Route::get('admin/dashboard', [DashboardController::class, 'index']);
 
 //Route untuk menampilkan student
-Route::get('admin/student', [StudentController::class, 'index'])->middleware('auth');
+Route::get('admin/student', [StudentController::class, 'index']);
 
 // Route untuk menampilkan courses
-Route::get('admin/courses', [CoursesController::class, 'index'])->middleware('auth');
+Route::get('admin/courses', [CoursesController::class, 'index']);
 
 // Route untuk menampilkan form tambah student
 Route::get('admin/student/create', [StudentController::class, 'create']);
@@ -58,19 +60,3 @@ Route::put('admin/courses/update/{id}', [CoursesController::class, 'update']);
 
 // Route untuk menhapus courses
 Route::delete('admin/courses/delete/{id}', [CoursesController::class, 'destroy']);
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
